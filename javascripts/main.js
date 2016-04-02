@@ -81,3 +81,24 @@ var get_crypto_stats = function(crypto){
     console.log(st_res);
     return st_res;
 };
+
+
+
+var params = {};
+function padStr(i) {
+    return (i < 10) ? "0" + i : "" + i;
+};
+
+var getDateStr = function(date){
+    return padStr(date.getMonth() + 1) + '/' + padStr(date.getDate()) + '/' + date.getFullYear();
+};
+var update_saved_url = function(){
+    if (params.input && !(Object.keys(params.input).length === 0))
+    {
+        var url = document.location.protocol +"//"+ document.location.hostname + document.location.pathname + '?' + $.param(params.input) + location.hash;
+        console.log(url);
+        $("#savedUrl input").val(url);
+        $("#savedUrl a").attr('href', url);
+    }
+};
+
