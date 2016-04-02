@@ -21,3 +21,9 @@ var getDiffIncrice = function(diff_history)
     }
     return diffInc_history
 };
+
+var base_crypto = "BTC";
+
+var stats = {};
+var btc_market_price_usd = 550;
+var timestamp = (new Date().getTime());
