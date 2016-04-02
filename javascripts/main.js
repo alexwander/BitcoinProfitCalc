@@ -142,3 +142,56 @@ var calc = function()
     });
 
 
+    params.calc_profit_step = function(){
+        var time_interval = this.current.endTimePeriod - this.current.startTimePeriod;
+        var pass_iteration = false;
+
+        if (isNaN(this.input.StartDate) || this.current.startTimePeriod >= this.input.StartDate)
+        {
+            // this.inputStartDate = NaN;
+        }
+        else if (this.current.endTimePeriod < this.input.StartDate)
+        {
+            time_interval = 0;
+            pass_iteration = true;
+        }
+        else
+        {
+            this.result.startTime = this.input.StartDate;
+            time_interval = this.current.endTimePeriod - this.input.StartDate;
+        }
+
+        if (!isNaN(this.input.EndDate) && this.current.endTimePeriod > this.input.EndDate)
+        {
+            time_interval -= this.current.endTimePeriod - this.input.EndDate;
+            this.current.endTimePeriod = this.input.EndDate;
+            this.current.stop = true;
+        }
+        var profit = this.getProfit(this.current.diff, time_interval);
+
+        if (!pass_iteration)
+        {
+            if (isNaN(this.input.EndDate) && params.current.step >= 3 && profit <= 1e-6)
+                this.current.stop = true;
+            else {
+                this.result.btcSum += profit;
+                this.result.profitList.push({
+                    date: new Date(this.current.endTimePeriod * 1000),
+                    diff: this.current.diff,
+                    profit: profit * this.input.CurrencyRate,
+                    result: this.result.btcSum * this.input.CurrencyRate});
+            }
+        }
+
+        if (!this.current.stop)
+        {
+            this.result.diffList.push([new Date(this.current.endTimePeriod * 1000), this.current.diff]);
+            this.current.step += 1;
+            this.current.diff *= 1 + this.input.DifficultyIncrement;
+            this.current.n_blocks += this.stats.blocks_between_recalc;
+            this.current.startTimePeriod = this.current.endTimePeriod;
+            time_interval = 0.5 * this.stats.blocks_between_recalc * (this.stats.minutes_between_blocks_normal * 60 * (1 + 1/(1 + this.input.DifficultyIncrement)));
+            this.current.endTimePeriod = this.current.startTimePeriod + time_interval;
+            this.result.diffList.push([new Date((this.current.startTimePeriod + 1) * 1000), this.current.diff]);
+        }
+    };
