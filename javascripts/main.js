@@ -9,3 +9,15 @@ var btc_stats = {}; //{"trade_volume_btc":20558.38042413,"electricity_consumptio
 
 // http://www.coinchoose.com/api.php?base=BTC
 var coins_stats = []; //[{"0":"LTC","symbol":"LTC","1":"Litecoin","name":"Litecoin","2":"scrypt","algo":"scrypt","3":"517821","currentBlocks":"517821","4":"3206.90479195","difficulty":"3206.90479195","5":"50","reward":"50","6":"2.5","minBlockTime":"2.5","7":"101606082519","networkhashrate":"101606082519","price":"0.02532","exchange":"BTC-e","exchange_url":"https:\/\/btc-e.com","ratio":4941.8862061521,"adjustedratio":4817.3008396105,"avgProfit":"5034.156551355906","avgHash":"85536263767.5526"}];
+
+
+var getDiffIncrice = function(diff_history)
+{
+    var diffInc_history	= [];
+    for (var i=1;i<diff_history.length;i++)
+    {
+        var diffInc = (diff_history[i] - diff_history[i-1]) / diff_history[i-1];
+        diffInc_history.push(diffInc);
+    }
+    return diffInc_history
+};
