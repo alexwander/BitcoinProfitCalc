@@ -102,3 +102,43 @@ var update_saved_url = function(){
     }
 };
 
+
+var calc = function()
+{
+    //update_curr_rate();
+
+    var inputs = $('#calculator-form form :input');
+    params = {input: {}};
+    inputs.each(function() {
+        var id = $(this).attr('id');
+        var val = $(this).val();
+        // console.log(id);
+        if (id && id.indexOf("input") == 0) {
+            id = id.replace("input", "");
+            if (id == 'DifficultyIncrement' || id == 'PoolFee')
+            {
+                val /= 100;
+            }
+            else if (id == 'StartDate' || id == 'EndDate')
+            {
+                val = Date.parse(val);
+                if (!isNaN(val)) {
+                    val /= 1000;
+                }
+            }
+            else if (id == 'Difficulty')
+            {
+                val = Number(val);
+            }
+            else if (id == 'Currency')
+            {
+                params.currency = val;
+                if (val == "BASE_CURR"){
+                    params.currency = base_crypto;
+                }
+            }
+            params.input[id] = val;
+        }
+    });
+
+
