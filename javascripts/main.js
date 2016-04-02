@@ -27,3 +27,57 @@ var base_crypto = "BTC";
 var stats = {};
 var btc_market_price_usd = 550;
 var timestamp = (new Date().getTime());
+
+
+var get_crypto_stats = function(crypto){
+    var st_res = {};
+    $.each(coins_stats, function(index, entry) {
+        // console.log(entry.symbol);
+        if (entry.symbol == crypto)
+        {
+            st_res = {
+                "difficulty": Number(entry.difficulty),
+                "timestamp": timestamp,
+                //"n_blocks_mined":175,
+                "n_blocks_total": Number(entry.currentBlocks),
+                "btc_price": entry.price,
+                "market_price_usd": entry.price * btc_market_price_usd,
+                "minutes_between_blocks_normal": Number(entry.minBlockTime),
+                "block_reward": entry.reward,
+                "diff_history": [1, 1, 1, 1],
+                "blocks_between_recalc": 2016,
+            };
+            if (entry.networkhashrate > 0)
+            {
+                st_res.minutes_between_blocks = entry.difficulty / entry.networkhashrate * Math.pow(2, 32) / 60;
+            }
+            else
+            {
+                st_res.minutes_between_blocks = st_res.minutes_between_blocks_normal;
+            }
+            if (entry.symbol == 'LTC')
+            {
+                st_res.reward_halved_blocks = 840000;
+                st_res.diff_history = [3300, 2820, 3508, 2674, 2690, 3207, 2871, 3322, 3145];
+            }
+            else if (entry.symbol == 'DOGE')
+            {
+                st_res.blocks_between_recalc = 4 * 60;
+                st_res.reward_func = function(val)
+                {
+                    var block_n = val.stats.n_blocks_total;
+                    if (block_n > 600000)
+                        this.block_reward = 10000;
+                    else{
+                        var max_reward = 1000000 * Math.pow(0.5, Math.floor(block_n / 100000));
+                        this.block_reward = 0.5 * max_reward;
+                    }
+                    return this.block_reward;
+                };
+            }
+            // break;
+        }
+    });
+    console.log(st_res);
+    return st_res;
+};
