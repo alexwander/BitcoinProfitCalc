@@ -57,6 +57,28 @@
                                     </select>
                                 </md-input-container>
 
+                            </div>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs="">
+                                <label>Net Difficulty:</label>
+                                <input type="number" ng-model="difficulty" ng-change="computeProfits()"/></td>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-xs="">
+                                <label>BTC Price:</label>
+                                <input type="number" ng-model="price" ng-change="computeProfits()"/>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="">
+                                <select ng-model="currency" ng-change="fetchPriceOnly()">
+                                    <option value="USD" ng-init="currencyCode = 'USD'">USD</option>
+                                    <option value="CNY">CNY</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                </select>
+                            </md-input-container>
+
 
 
 
