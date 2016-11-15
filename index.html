@@ -43,6 +43,20 @@
                                 <div>
                                 </div>
 
+                                md-input-container class="md-block" flex-gt-xs="">
+                                <label>Hashrate:</label>
+                                <input type="number" id="userHash" ng-model="userHash" ng-change="computeProfits()"
+                                />
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="">
+                                    <select ng-model="userHashSuffix" ng-change="computeProfits()">
+                                        <option value="GH" selected="selected" ng-init="userHashSuffix = 'GH'">GH/s
+                                        </option>
+                                        <option value="TH">TH/s</option>
+                                        <option value="PH">PH/s</option>
+                                    </select>
+                                </md-input-container>
+
 
 
 
