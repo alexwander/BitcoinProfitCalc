@@ -79,6 +79,27 @@
                                 </select>
                             </md-input-container>
 
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs="">
+                                <label>Block Reward:</label>
+                                <input type="number" ng-model="reward" ng-change="computeProfits()"/>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-xs="">
+                                <label>Power Consumption:</label>
+                                <input type="number" ng-model="wattage" ng-change="computeProfits()"
+                                       ng-init="wattage = 0"/>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="">
+                                <select ng-model="powerSuffix" ng-change="computeProfits()">
+                                    <option value="W" selected="powerSuffix" ng-init="powerSuffix = 'W'">W</option>
+                                    <option value="kW">kW</option>
+                                </select>
+                            </md-input-container>
+                        </div>
+
 
 
 
