@@ -100,6 +100,29 @@
                             </md-input-container>
                         </div>
 
+            </div>
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-xs="">
+                    <label>Power Cost:</label>
+                    <input type="number" ng-model="powerCost" ng-change="computeProfits()"
+                           ng-init="powerCost = 0"/>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-xs="">
+                    <label>Pool Fee:</label>
+                    <input type="number" ng-model="poolFee" ng-change="computeProfits()"
+                           ng-init="poolFee = 0"/>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-xs="">
+                    <label>Difficulty Increase:</label>
+                    <input type="number" ng-model="nextDifficulty" ng-change="computeProfits()"
+                           ng-init="nextDifficulty = 5"/>
+                </md-input-container>
+            </div>
+            </form>
 
 
 
