@@ -192,7 +192,21 @@
 
                 <div id="chartContainer" layout-margin layout-fill>
 
-
+                    <div id="chartNotReady" ng-hide="myLineChart">
+                        <h3>Enter hashrate data for responsive chart!</h3>
+                    </div>
+                    <div ng-show="myLineChart">
+                        <h3>Total Profit ({{currency}})</h3>
+                        <canvas id="myChart" width="300" height="400"></canvas>
+                        <br/> Time Frame:
+                        <input type="number" ng-model="timeFrame" id="axisChange" ng-init="timeFrame = 12"
+                               ng-change="changeAxis()"/> Months
+                    </div>
+                </div>
+                <!--end of rigtside-->
+            </md-content>
+        </div>
+    </div>
 
 
 
