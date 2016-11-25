@@ -1,3 +1,3 @@
-/**
- * Created by alexandr on 25.11.2016.
- */
+angular
+    .module('MyApp',['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+    .controller('DemoCtrl', function($scope, $http) {
