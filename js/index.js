@@ -8,12 +8,6 @@ angular
 
 
 
-
-
-
-
-
-
         .config(function($mdThemingProvider) {
 
             // Configure a dark theme with primary foreground yellow
