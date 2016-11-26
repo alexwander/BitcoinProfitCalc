@@ -16,6 +16,13 @@ angular
 
         var task;
 
+        $scope.change = function() {
+            if(task) {
+                clearTimeout(task);
+            }
+            task = setTimeout(fetch, 800);
+        };
+
 
 
 
