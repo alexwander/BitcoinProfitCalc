@@ -2,6 +2,19 @@ angular
     .module('MyApp',['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
     .controller('DemoCtrl', function($scope, $http) {
 
+        if($scope.search == undefined) {
+            $scope.search = "";
+            $scope.currency = "USD";
+            fetch();
+        }
+
+        $scope.user = {
+            email: 'ipsum@lorem.com',
+            firstName: '',
+            lastName: '',
+        };
+
+        var task;
 
 
 
