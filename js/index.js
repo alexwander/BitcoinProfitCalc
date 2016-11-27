@@ -22,6 +22,15 @@ angular
             }
             task = setTimeout(fetch, 800);
         };
+        $scope.update = function() {
+            $scope.search = $scope.others.Search[index].Title;
+            $scope.change();
+        };
+        $scope.select = function() {
+            this.valueOfSelectionRange(0, this.value.length);
+        }
+        $scope.earnings = {};
+        $scope.values = [];
 
 
 
