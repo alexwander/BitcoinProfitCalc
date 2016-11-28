@@ -32,6 +32,23 @@ angular
         $scope.earnings = {};
         $scope.values = [];
 
+        function fetch() {
+            $http.get("https://bitcoin.toshi.io/api/v0/blocks/latest")
+                .success(function(response) {
+                    $scope.bitcoinStats = response;
+                    $scope.difficulty = parseFloat(response.difficulty.toFixed(0));
+                    $scope.reward = response.reward/1E8;
+                });
+            //finding average price between 3 high volume exchanges.
+            $http.get("https://api.bitcoinaverage.com/exchanges/USD")
+                .success(function(response) {
+                    $scope.priceBitfinex = response.bitfinex.rates.last;
+                    $scope.priceBitStamp = response.bitstamp.rates.last;
+                    $scope.pricebtce = response.btce.rates.last;
+                    $scope.price = parseFloat((($scope.priceBitfinex + $scope.priceBitStamp + $scope.pricebtce) /3).toFixed(2));
+                });
+        }
+
 
 
 
