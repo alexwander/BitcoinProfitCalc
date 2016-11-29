@@ -49,7 +49,32 @@ angular
                 });
         }
 
-
+        $scope.getOnlyPrice = function() {
+            //finding average price between 3 high volume exchanges.
+            $http.get("https://api.bitcoinaverage.com/exchanges/" + $scope.currency)
+                .success(function(response) {
+                    if ($scope.currency == "USD") {
+                        $scope.priceBitfinex = response.bitfinex.rates.last;
+                        $scope.priceBitStamp = response.bitstamp.rates.last;
+                        $scope.pricebtce = response.btce.rates.last;
+                        $scope.price = parseFloat((($scope.priceBitfinex + $scope.priceBitStamp + $scope.pricebtce) /3).toFixed(2));
+                        $scope.calcProfits();
+                    } else if ($scope.currency == "CNY") {
+                        $scope.price = parseFloat(response.btc38.rates.last.toFixed(2));
+                        $scope.calcProfits();
+                    } else if ($scope.currency == "CAD") {
+                        $scope.priceQuadrigacx = response.quadrigacx.rates.last;
+                        $scope.priceCavirtex = response.cavirtex.rates.last;
+                        $scope.priceCoinbase = response.coinbase.rates.last;
+                        $scope.price = parseFloat((($scope.priceQuadrigacx + $scope.priceCavirtex + $scope.priceCoinbase) /3).toFixed(2));
+                        $scope.calcProfits();
+                    } else if ($scope.currency == "AUD") {
+                        $scope.btcmarkets = response.btcmarkets.rates.last;
+                        $scope.price = parseFloat($scope.btcmarkets.toFixed(2));
+                        $scope.calcProfits();
+                    }
+                });
+        }
 
 
 
