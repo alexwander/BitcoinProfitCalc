@@ -77,9 +77,63 @@ angular
         }
 
 
+        $scope.calcProfits = function() {
+            if ($scope.userHashSuffix == "GH") {
+                $scope.userHashSuffixMult = 1e9;
+            }
+            if ($scope.userHashSuffix == "TH") {
+                $scope.userHashSuffixMult = 1e12;
+            }
+            if ($scope.userHashSuffix == "PH") {
+                $scope.userHashSuffixMult = 1e15;
+            }
+            if ($scope.powerSuffix == "W") {
+                $scope.userPowerSuffixMult = 0.001;
+            } else {
+                $scope.userPowerSuffixMult = 1;
+            }
+            
+            $scope.earnings.hourGrossBTC = ($scope.userHash/(65536*65536*$scope.difficulty))*$scope.reward*3600*$scope.userHashSuffixMult;
+            $scope.values[0] = [$scope.earnings.hourGrossBTC];
+            $scope.earnings.hourGrossUSD = $scope.earnings.hourGrossBTC*$scope.price;
+            $scope.values[1] = [$scope.earnings.hourGrossUSD];
+            $scope.earnings.powerCostHour = ($scope.wattage*$scope.userPowerSuffixMult*$scope.powerCost)
+            $scope.values[2] = [$scope.earnings.powerCostHour];
+            $scope.earnings.poolCostHour = ($scope.earnings.hourGrossUSD*($scope.poolFee/100));
+            $scope.values[3] = [$scope.earnings.poolCostHour];
+            $scope.earnings.profitHour = (($scope.earnings.hourGrossUSD - $scope.earnings.powerCostHour) - $scope.earnings.poolCostHour);
+            $scope.values[4] = [$scope.earnings.profitHour];
+            $scope.earnings.hourGrossBTCNext = $scope.earnings.hourGrossBTC/(1+($scope.nextDifficulty/100));
+            $scope.values[5] = [$scope.earnings.hourGrossBTCNext];
+            $scope.earnings.hourGrossUSDNext = $scope.earnings.hourGrossBTCNext*$scope.price;
+            $scope.values[6] = [$scope.earnings.hourGrossUSDNext];
+            $scope.earnings.poolCostHourNext = ($scope.earnings.hourGrossUSDNext*($scope.poolFee/100));
+            $scope.values[7] = [$scope.earnings.poolCostHourNext];
+            $scope.earnings.profitHourNext = (($scope.earnings.hourGrossUSDNext - $scope.earnings.powerCostHour) - $scope.earnings.poolCostHourNext);
+            $scope.values[8] = [$scope.earnings.profitHourNext];
+
+            for (var i = 0; i < $scope.values.length; i++) {
+                //earnings/costs per day
+                $scope.values[i][1] = $scope.values[i][0] * 24;
+                //earnings/costs per week
+                $scope.values[i][2] = $scope.values[i][1] * 7;
+                //earnings/costs per month
+                $scope.values[i][3] = $scope.values[i][1] * 30;
+                //earnings/costs per year
+                $scope.values[i][4] = $scope.values[i][1] * 365;
+            }
+
+            if (typeof $scope.userHash !== "undefined" && typeof $scope.reward !== "undefined" && typeof
+                    $scope.price !== "undefined" && typeof $scope.difficulty !== "undefined") {
+                $scope.drawChart();
+            }
+        }
 
 
-        .config(function($mdThemingProvider) {
+
+
+
+            .config(function($mdThemingProvider) {
 
             // Configure a dark theme with primary foreground yellow
 
