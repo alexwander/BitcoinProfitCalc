@@ -92,7 +92,7 @@ angular
             } else {
                 $scope.userPowerSuffixMult = 1;
             }
-            
+
             $scope.earnings.hourGrossBTC = ($scope.userHash/(65536*65536*$scope.difficulty))*$scope.reward*3600*$scope.userHashSuffixMult;
             $scope.values[0] = [$scope.earnings.hourGrossBTC];
             $scope.earnings.hourGrossUSD = $scope.earnings.hourGrossBTC*$scope.price;
@@ -129,6 +129,22 @@ angular
             }
         }
 
+        $scope.drawChart = function(drawN) {
+            var labels = [];
+            $scope.profit = [0];
+            var axisScaleFactor = Math.floor($scope.timeFrame/16) + 1;
+
+            var rollingDiffFactor = 1/(1+($scope.nextDifficulty/100));
+            for (var i = 0; i <= $scope.timeFrame; i++) {
+                labels[i] = i + (i == 1? " Month" : " Months");
+                if (i > 0) {
+                    //profit logic
+                    $scope.profit[i] = $scope.profit[i-1] + 2.167*(rollingDiffFactor*$scope.values[1][2] - rollingDiffFactor*$scope.values[3][2] - $scope.values[2][2]);
+                    rollingDiffFactor *= 1/(1+($scope.nextDifficulty/100));
+                    $scope.profit[i] += + 2.167*(rollingDiffFactor*$scope.values[1][2] - rollingDiffFactor*$scope.values[3][2] - $scope.values[2][2]);
+                    $scope.profit[i] =  parseFloat($scope.profit[i].toFixed(2));
+                }
+            }
 
 
 
