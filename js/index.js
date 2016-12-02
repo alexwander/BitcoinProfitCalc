@@ -147,6 +147,22 @@ angular
             }
 
 
+            var data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Profit",
+                        fillColor: "rgba(0,0,0,0.2)",
+                        strokeColor: "rgba(0,0,0,1)",
+                        pointColor: "rgba(0,0,0,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: $scope.profit
+                    }]
+            };
+
+
 
 
             .config(function($mdThemingProvider) {
