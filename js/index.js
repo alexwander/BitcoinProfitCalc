@@ -179,3 +179,8 @@ angular
 
 
         });
+            
+            $scope.changeAxis = function() {
+                $scope.myLineChart.destroy();
+                $scope.drawChart(true);
+            }
