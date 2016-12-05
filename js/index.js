@@ -1,9 +1,8 @@
-
 angular
-    .module('MyApp',['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
-    .controller('DemoCtrl', function($scope, $http) {
+    .module('MyApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+    .controller('DemoCtrl', function ($scope, $http) {
 
-        if($scope.search == undefined) {
+        if ($scope.search == undefined) {
             $scope.search = "";
             $scope.currency = "USD";
             fetch();
@@ -18,18 +17,18 @@ angular
         var task;
 
 // loading results when the search box changes
-        $scope.change = function() {
-            if(task) {
+        $scope.change = function () {
+            if (task) {
                 clearTimeout(task);
             }
             task = setTimeout(fetch, 800);
         };
 
-        $scope.update = function() {
+        $scope.update = function () {
             $scope.search = $scope.others.Search[index].Title;
             $scope.change();
         };
-        $scope.select = function() {
+        $scope.select = function () {
             this.valueOfSelectionRange(0, this.value.length);
         }
         $scope.earnings = {};
@@ -38,32 +37,32 @@ angular
 //function that grabs api data from the net
         function fetch() {
             $http.get("https://bitcoin.toshi.io/api/v0/blocks/latest")
-                .success(function(response) {
+                .success(function (response) {
                     $scope.bitcoinStats = response;
                     $scope.difficulty = parseFloat(response.difficulty.toFixed(0));
-                    $scope.reward = response.reward/1E8;
+                    $scope.reward = response.reward / 1E8;
                 });
             //finding average price between 3 high volume exchanges.
             $http.get("https://api.bitcoinaverage.com/exchanges/USD")
-                .success(function(response) {
+                .success(function (response) {
                     $scope.priceBitfinex = response.bitfinex.rates.last;
                     $scope.priceBitStamp = response.bitstamp.rates.last;
                     $scope.pricebtce = response.btce.rates.last;
-                    $scope.price = parseFloat((($scope.priceBitfinex + $scope.priceBitStamp + $scope.pricebtce) /3).toFixed(2));
+                    $scope.price = parseFloat((($scope.priceBitfinex + $scope.priceBitStamp + $scope.pricebtce) / 3).toFixed(2));
                 });
         }
 
 
         //this function grabs price data only when the currency is changed
-        $scope.getOnlyPrice = function() {
+        $scope.getOnlyPrice = function () {
             //finding average price between 3 high volume exchanges.
             $http.get("https://api.bitcoinaverage.com/exchanges/" + $scope.currency)
-                .success(function(response) {
+                .success(function (response) {
                     if ($scope.currency == "USD") {
                         $scope.priceBitfinex = response.bitfinex.rates.last;
                         $scope.priceBitStamp = response.bitstamp.rates.last;
                         $scope.pricebtce = response.btce.rates.last;
-                        $scope.price = parseFloat((($scope.priceBitfinex + $scope.priceBitStamp + $scope.pricebtce) /3).toFixed(2));
+                        $scope.price = parseFloat((($scope.priceBitfinex + $scope.priceBitStamp + $scope.pricebtce) / 3).toFixed(2));
                         $scope.calcProfits();
                     } else if ($scope.currency == "CNY") {
                         $scope.price = parseFloat(response.btc38.rates.last.toFixed(2));
@@ -72,7 +71,7 @@ angular
                         $scope.priceQuadrigacx = response.quadrigacx.rates.last;
                         $scope.priceCavirtex = response.cavirtex.rates.last;
                         $scope.priceCoinbase = response.coinbase.rates.last;
-                        $scope.price = parseFloat((($scope.priceQuadrigacx + $scope.priceCavirtex + $scope.priceCoinbase) /3).toFixed(2));
+                        $scope.price = parseFloat((($scope.priceQuadrigacx + $scope.priceCavirtex + $scope.priceCoinbase) / 3).toFixed(2));
                         $scope.calcProfits();
                     } else if ($scope.currency == "AUD") {
                         $scope.btcmarkets = response.btcmarkets.rates.last;
@@ -83,9 +82,8 @@ angular
         }
 
 
-
         /*Function that calculates the profits of the user in bitcoin.*/
-        $scope.calcProfits = function() {
+        $scope.calcProfits = function () {
             if ($scope.userHashSuffix == "GH") {
                 $scope.userHashSuffixMult = 1e9;
             }
@@ -101,21 +99,21 @@ angular
                 $scope.userPowerSuffixMult = 1;
             }
             //long block of math logic to find the hourly rates of gross earnings, power costs, pool fees, and profit
-            $scope.earnings.hourGrossBTC = ($scope.userHash/(65536*65536*$scope.difficulty))*$scope.reward*3600*$scope.userHashSuffixMult;
+            $scope.earnings.hourGrossBTC = ($scope.userHash / (65536 * 65536 * $scope.difficulty)) * $scope.reward * 3600 * $scope.userHashSuffixMult;
             $scope.values[0] = [$scope.earnings.hourGrossBTC];
-            $scope.earnings.hourGrossUSD = $scope.earnings.hourGrossBTC*$scope.price;
+            $scope.earnings.hourGrossUSD = $scope.earnings.hourGrossBTC * $scope.price;
             $scope.values[1] = [$scope.earnings.hourGrossUSD];
-            $scope.earnings.powerCostHour = ($scope.wattage*$scope.userPowerSuffixMult*$scope.powerCost)
+            $scope.earnings.powerCostHour = ($scope.wattage * $scope.userPowerSuffixMult * $scope.powerCost)
             $scope.values[2] = [$scope.earnings.powerCostHour];
-            $scope.earnings.poolCostHour = ($scope.earnings.hourGrossUSD*($scope.poolFee/100));
+            $scope.earnings.poolCostHour = ($scope.earnings.hourGrossUSD * ($scope.poolFee / 100));
             $scope.values[3] = [$scope.earnings.poolCostHour];
             $scope.earnings.profitHour = (($scope.earnings.hourGrossUSD - $scope.earnings.powerCostHour) - $scope.earnings.poolCostHour);
             $scope.values[4] = [$scope.earnings.profitHour];
-            $scope.earnings.hourGrossBTCNext = $scope.earnings.hourGrossBTC/(1+($scope.nextDifficulty/100));
+            $scope.earnings.hourGrossBTCNext = $scope.earnings.hourGrossBTC / (1 + ($scope.nextDifficulty / 100));
             $scope.values[5] = [$scope.earnings.hourGrossBTCNext];
-            $scope.earnings.hourGrossUSDNext = $scope.earnings.hourGrossBTCNext*$scope.price;
+            $scope.earnings.hourGrossUSDNext = $scope.earnings.hourGrossBTCNext * $scope.price;
             $scope.values[6] = [$scope.earnings.hourGrossUSDNext];
-            $scope.earnings.poolCostHourNext = ($scope.earnings.hourGrossUSDNext*($scope.poolFee/100));
+            $scope.earnings.poolCostHourNext = ($scope.earnings.hourGrossUSDNext * ($scope.poolFee / 100));
             $scope.values[7] = [$scope.earnings.poolCostHourNext];
             $scope.earnings.profitHourNext = (($scope.earnings.hourGrossUSDNext - $scope.earnings.powerCostHour) - $scope.earnings.poolCostHourNext);
             $scope.values[8] = [$scope.earnings.profitHourNext];
@@ -138,22 +136,21 @@ angular
         }
 
 
-
         //function responsible for creating chart data and drawing chart
-        $scope.drawChart = function(drawN) {
+        $scope.drawChart = function (drawN) {
             var labels = [];
             $scope.profit = [0];
-            var axisScaleFactor = Math.floor($scope.timeFrame/16) + 1;
+            var axisScaleFactor = Math.floor($scope.timeFrame / 16) + 1;
 
-            var rollingDiffFactor = 1/(1+($scope.nextDifficulty/100));
+            var rollingDiffFactor = 1 / (1 + ($scope.nextDifficulty / 100));
             for (var i = 0; i <= $scope.timeFrame; i++) {
-                labels[i] = i + (i == 1? " Month" : " Months");
+                labels[i] = i + (i == 1 ? " Month" : " Months");
                 if (i > 0) {
                     //profit logic
-                    $scope.profit[i] = $scope.profit[i-1] + 2.167*(rollingDiffFactor*$scope.values[1][2] - rollingDiffFactor*$scope.values[3][2] - $scope.values[2][2]);
-                    rollingDiffFactor *= 1/(1+($scope.nextDifficulty/100));
-                    $scope.profit[i] += + 2.167*(rollingDiffFactor*$scope.values[1][2] - rollingDiffFactor*$scope.values[3][2] - $scope.values[2][2]);
-                    $scope.profit[i] =  parseFloat($scope.profit[i].toFixed(2));
+                    $scope.profit[i] = $scope.profit[i - 1] + 2.167 * (rollingDiffFactor * $scope.values[1][2] - rollingDiffFactor * $scope.values[3][2] - $scope.values[2][2]);
+                    rollingDiffFactor *= 1 / (1 + ($scope.nextDifficulty / 100));
+                    $scope.profit[i] += +2.167 * (rollingDiffFactor * $scope.values[1][2] - rollingDiffFactor * $scope.values[3][2] - $scope.values[2][2]);
+                    $scope.profit[i] = parseFloat($scope.profit[i].toFixed(2));
                 }
             }
             var data = {
@@ -181,14 +178,14 @@ angular
                 var detectRadius = 1;
             }
             var options = {
-                pointHitDetectionRadius : detectRadius
+                pointHitDetectionRadius: detectRadius
             };
             //if the chart object doesn't exist yet, OR a complete redraw was called. Create new chart object
             if (typeof $scope.myLineChart == "undefined" || drawN) {
                 ctx = document.getElementById("myChart").getContext("2d");
                 $scope.myLineChart = new Chart(ctx).Line(data, options);
             } else {
-                for (var i = 0; i < $scope.profit.length;i++) {
+                for (var i = 0; i < $scope.profit.length; i++) {
                     $scope.myLineChart.datasets[0].points[i].value = $scope.profit[i];
                 }
                 $scope.myLineChart.update();
@@ -196,7 +193,7 @@ angular
         }
         //Function that is called when user changes the number of months are to be included in the chart
         //destroys all old chart data then calls the drawChart function to create new data
-        $scope.changeAxis = function() {
+        $scope.changeAxis = function () {
             $scope.myLineChart.destroy();
             $scope.drawChart(true);
         }
@@ -204,7 +201,7 @@ angular
     })
 
 
-    .config(function($mdThemingProvider) {
+    .config(function ($mdThemingProvider) {
 
         // Configure a dark theme with primary foreground yellow
 
