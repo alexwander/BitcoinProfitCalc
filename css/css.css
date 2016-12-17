@@ -1,0 +1,16 @@
+#app {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+#left-block {
+    background-color: rgb(48,48,48);
+
+}
+
+#charttable{
+    max-width: 600px;
+    margin: 60px; !important
+
+
+}
