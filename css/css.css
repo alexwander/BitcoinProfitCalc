@@ -69,3 +69,33 @@ td {
 }
 
 tr:hover{background-color:#008080}
+
+
+.negative {
+    color: red;
+}
+#chartContainer {
+    text-align: center;
+
+    padding: 7px;
+    /*background-color: #cccccc;*/
+}
+
+
+#axisChange {
+    width: 50px;
+}
+.negative {
+    color: red;
+}
+#chartContainer {
+    text-align: center;
+
+    padding: 7px;
+    /*background-color: #cccccc;*/
+}
+
+
+#axisChange {
+    width: 50px;
+}
