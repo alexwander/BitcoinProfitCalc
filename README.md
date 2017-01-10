@@ -1,13 +1,13 @@
 ## Synopsis
 
-This is an AngularJS, POS App that accepts Bitcoin and most cryptocurrencies available on ShapeShift.io as payment. This project is still a work in progress and is currently meant for experimental and learning purposes only. Please use at your own risk.
+This is an AngularJS App for calculating profitability of mining  profitability chartsThe utility fetches live Bitcoin network &amp; price data from bitcoin.toshi.io and bitcoinaverage.com. This project is still a work in progress and is currently meant for experimental and learning purposes only. Please use at your own risk.
 
 ## Motivation
 
 This app was created to build and expand the authors knowledge of AngularJS and to explore available API's in the cryptocurrency space. If able, please offer productive critiques and feedback for further improvement of the app.
 
 ## Demo Site
-- cryptomerchantapp.xyz
+- http://btccalck.tk/
 
 ## Installation/Setup
 
@@ -15,29 +15,11 @@ For Merchant use, navigate to the "config/data.json" file. There are two require
 
 ## Possible Use-Cases
 
-Bitcoin->Bitcoin Payments:
-- The customer selects the "Pay with Bitcoin" option to pay the merchant directly in Bitcoin.
 
-Altcoin->Bitcoin Payments:
-- The customer selects the "Pay with Altcoin" option to pay the merchant in Bitcoin with any available altcoin via ShapeShift.io.
-
-Altcoin->Altcoin Payments
-- The customer selects the "Pay with {{defaultCoin}}" option to pay the merchant in {{defaultCoin}} with any available altcoin via ShapeShift.io.
-
-Bitcoin->Coinbase Instant Exchange Bitcoin Address->USD Payments:
-- Note: https://support.coinbase.com/customer/portal/articles/2021569-what-is-instant-exchange-
-- The customer selects the "Pay with Bitcoin" option to pay the merchant with Bitcoin to the merchant's Instant Exchange Bitcoin Address from Coinbase. The payment is then immediately exchanged for USD.
-
-Altcoin->Coinbase Instant Exchange Bitcoin Address->USD Payments:
-- Note: https://support.coinbase.com/customer/portal/articles/2021569-what-is-instant-exchange-
-- The customer selects the "Pay with Altcoin" option to pay the merchant with Bitcoin withh any available altcoin via ShapeShift.io to the merchant's Instant Exchange Bitcoin Address from Coinbase. The payment is then immediately exchanged for USD.
 
 ## Future Improvements/Known Limitations
 - Create support for more altcoins on the #/search page.
 - Create support for altcoins available on ShapeShift.io that require more than an address for a successful transaction (i.e. Monero).
 - $rootscope was not used throughout the app due to several suggestions that it be avoided. However, accessing parent scopes eventually became an issue. There are instances where $modalInstance is used to work around this, but it is less than ideal. This issue also seems to prevent the $scope.items array from being cleared after each transaction requiring the user to click "Remove All Items" instead. Any suggestions on how to best access parent scope would be greatly appreciated.
-
-## Video Walk-through
-- https://youtu.be/DoZfZQyTCHs
 
 
