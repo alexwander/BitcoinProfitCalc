@@ -26,7 +26,7 @@
 
                 <md-content md-theme="docs-light" layout-gt-sm="row" layout-padding="">
                     <div>
-<h3> Enter your set up information in the form below. Do not enter commas, only dots for decimal separator.</h3>
+
                     </div>
                 </md-content>
 
@@ -120,6 +120,11 @@
 
             <div layout="column" id="left-block" flex>
                 <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding="">
+                    <div>
+                        <h3> Enter your set up information in the form below. Do not enter commas, only dots for decimal separator.</h3>
+                    </div>
+                </md-content>
+                <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding="">
                     <div layout-margin layout-fill>
                         <h2>This Difficulty</h2>
                         <table id="charttable" align="center">
@@ -194,12 +199,20 @@
                     </div>
 
                 </md-content>
+
             </div>
         </div>
 
         <md-toolbar class="md-medium-tall">
             <div layout="row" layout-align="center center" flex>
-                <span>FOOTER</span>
+
+                <div id="authorInfo">
+                    Created by Alexandr R. © 2017 <br>
+                    Fork this repo on Github:
+
+                    <a href="https://github.com/alexwander/BitcoinProfitCalc/"><button id="search-button" /></button></a>
+                </div>
+
             </div>
         </md-toolbar>
     </div>

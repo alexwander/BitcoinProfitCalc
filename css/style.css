@@ -47,7 +47,7 @@ td {
 }
 
 tr:hover {
-    background-color: #008080
+    background-color: #008080;
 }
 
 h2,
@@ -105,4 +105,19 @@ tr:hover {
 
 #axisChange {
     width: 50px;
+}
+
+#authorInfo {
+    text-align: center;
+    padding: 10px;
+    font-size: 1.1rem
+
+}
+
+#search-button{
+    width: 25px;
+    height: 25px;
+    background-image: url("icons/github.svg");
+    background-repeat: no-repeat;
+    background-color: rgb(63,81,181);
 }
